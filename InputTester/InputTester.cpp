@@ -44,14 +44,6 @@ LRESULT CALLBACK LowLevelMouseProc(_In_ int nCode, _In_ WPARAM wParam, _In_ LPAR
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 {
-    // GetCurrentInputMessageSource
-    INPUT_MESSAGE_SOURCE inputMessageSource;
-    if (GetCurrentInputMessageSource(&inputMessageSource))
-        if (inputMessageSource.originId == IMO_INJECTED)
-            cout << "GetCurrentInputMessageSource: IMO_INJECTED detected!" << endl;
-        else
-            cout << "Failed to get current input message source." << endl;
-
     switch (uMsg)
     {
     default:
@@ -82,6 +74,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         return 0;
     case WM_INPUT:
+        // GetCurrentInputMessageSource
+        INPUT_MESSAGE_SOURCE inputMessageSource;
+        if (GetCurrentInputMessageSource(&inputMessageSource))
+        {
+            if (inputMessageSource.originId == IMO_INJECTED)
+                cout << "GetCurrentInputMessageSource: IMO_INJECTED detected!" << endl;
+        }
+        else
+            cout << "Failed to get current input message source." << endl;
+
         // RawInput
 
 
