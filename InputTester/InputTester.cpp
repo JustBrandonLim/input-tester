@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Windows.h>
+#include <chrono>
 
 using namespace std;
 
@@ -85,7 +86,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             cout << "Failed to get current input message source." << endl;
 
         // RawInput
+        HRAWINPUT hRawInput = reinterpret_cast<HRAWINPUT>(lParam);
 
+        UINT32 size = 0;
+        GetRawInputData(hRawInput, RID_INPUT, NULL, &size, sizeof(RAWINPUTHEADER));
+
+        PRAWINPUT pRawInput = reinterpret_cast<PRAWINPUT>(malloc(size));
+        GetRawInputData(hRawInput, RID_HEADER, pRawInput, &size, sizeof(RAWINPUTHEADER));
+        GetRawInputData(hRawInput, RID_INPUT, pRawInput, &size, sizeof(RAWINPUTHEADER));
+
+        if (pRawInput != NULL)
+        {
+            if (pRawInput->header.hDevice == NULL)
+                cout << "GetRawInputData: hDevice == NULL is detected!" << endl;
+        }
+        else
+            cout << "Failed to get raw input data." << endl;
 
         return 0;
     }
