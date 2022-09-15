@@ -112,10 +112,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 int main()
 {
     // Set up Low Level Keyboard Hook
-    //kbHook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, 0, 0);
+    kbHook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, 0, 0);
 
     // Set up Low Level Mouse Hook
-    //msHook = SetWindowsHookEx(WH_MOUSE_LL, LowLevelMouseProc, 0, 0);
+    msHook = SetWindowsHookEx(WH_MOUSE_LL, LowLevelMouseProc, 0, 0);
 
     // Set up Window
     WNDCLASS wndClass = {};
